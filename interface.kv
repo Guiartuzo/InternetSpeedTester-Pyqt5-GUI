@@ -1,0 +1,27 @@
+<MainScreen>:
+
+    name: "main"
+
+    FloatLayout:
+
+        canvas.before:
+            Rectangle:
+                pos: self.pos
+                size: self.size
+                source: 'images\mainscreen_back.jpg'
+
+        Button:
+            text: "START"
+            font_size: 20
+            pos_hint: {"x":0.35, "y":0.55}
+            size_hint: 0.3, 0.1
+            on_release: 
+                print("iniciar teste de conexão")
+
+        Button:
+            text: "STOP"  
+            font_size: 20
+            pos_hint: {"x":0.35, "y":0.40}
+            size_hint: 0.3, 0.1
+            on_release: 
+                print("parar teste de conexão")
