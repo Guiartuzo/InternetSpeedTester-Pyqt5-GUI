@@ -5,7 +5,6 @@ class System():
         interfaceObj = interface.InterfaceApp()
         interfaceObj.run()
 
-
 if __name__ == "__main__":
 
     main = System()
