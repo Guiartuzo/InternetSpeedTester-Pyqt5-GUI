@@ -1,35 +1,40 @@
 import time
+import results_plotter
+from datetime import datetime
 
 class InternetTest:
 
-    headers = []
+    headers = ['time']
+    data = []
+    results = results_plotter.Writer()
 
     def Test(self, download, ping, upload, frequency):
     
         while True:
 
-            print(frequency)
+            if download == False and upload == False and ping == False:
+                break
+
+            current_time = datetime.now()
+            current_time = time.strftime("%H:%M %d-%m-%y")
+            self.data.append(current_time)
 
             from speedtest import Speedtest
             st = Speedtest()
 
             if download:  
                 self.headers.append("download")
-                download_speed = st.download()
+                self.data.append(st.download()/1000000)
     
             if upload: 
                 self.headers.append("upload")
-                upload_speed = st.upload()  
+                self.data.append(st.upload()/1000000)
 
             if ping:  
                 self.headers.append("ping")
                 servernames =[]  
-                st.get_servers(servernames)  
-                ping_delay = st.results.ping  
+                st.get_servers(servernames)
+                self.data.append(st.results.ping)  
 
-            if download == False and upload == False and ping == False:
-                print("Please check one !") 
-
-            print(self.headers)
-
+            self.results.WriteFile(self.headers,self.data)
             time.sleep(int(frequency)*60)

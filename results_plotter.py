@@ -1,17 +1,22 @@
-import csv
+import pandas
+import glob
 
 class Writer:
 
-    def WriteCSV(self, download = 0, upload = 0, ping = 0):
+    def WriteFile(self, header, data):
+        
+        data_frame = pandas.DataFrame(columns = header)
 
-        header = ['time', 'download', 'country_code2', 'country_code3']
-        data = ['Afghanistan', 652090, 'AF', 'AFG']
+        data_series = pandas.Series(data, index = data_frame.columns)
+        data_frame = data_frame.append(data_series, ignore_index=True)
 
-        with open('countries.csv', 'w', newline='') as f:
-            writer = csv.writer(f)
+        index = self.getTestID()
 
-            # write the header
-            writer.writerow(header)
+        writer = pandas.ExcelWriter('internet_test_{}.xlsx'.format(index+1), engine='xlsxwriter')
+        data_frame.to_excel(writer, sheet_name='Sheet1')
+        writer.save()
 
-            # write the data
-            writer.writerow(data)
+    def getTestID(self):
+
+        lista = glob.glob('internet_test*.xlsx')
+        return len(lista)

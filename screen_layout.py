@@ -1,4 +1,3 @@
-import threading
 from kivy.uix.screenmanager import Screen
 from internet_test import InternetTest
 from multiprocessing import Process
@@ -9,10 +8,12 @@ class MainScreen(Screen):
     DownloadTest = False
     PingTest = False
     UploadTest = False
+    p = Process()
     
     def BtnStart(self):
-        p = Process(target= self.Internet.Test, args=(self.DownloadTest, self.PingTest, self.UploadTest, self.ids.frequency.text))
-        p.start()
+        self.p = Process(target= self.Internet.Test, args=(self.DownloadTest, self.PingTest, self.UploadTest, self.ids.frequency.text))
+        self.p.start()
 
     def BtnStop(self):
-        print("Finalizando teste")
+        if self.p.is_alive:
+            self.p.terminate()
