@@ -37,4 +37,5 @@ class InternetTest:
                 self.data.append(st.results.ping)  
 
             self.results.WriteFile(self.headers,self.data)
+            self.data = []
             time.sleep(int(frequency)*60)
