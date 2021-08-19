@@ -2,3 +2,5 @@ dist
 main.spec
 build
 __pycache__
+interface.ui
+mainscreen_back.jpg
